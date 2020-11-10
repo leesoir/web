@@ -31,6 +31,16 @@ class Student{
 	int aver;
 	char grade;
 	
+	//constructor
+	Student(String name){
+		this.name = name;
+	}
+	
+	Student(int k, int e, int m){
+		this.setData("없음", k, e, m);
+		this.setGrade();
+	}
+	
 	void setData(String name, int kor, int eng, int math) {
 		this.name = name;
 		this.kor = kor;
