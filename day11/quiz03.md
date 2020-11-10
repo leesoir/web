@@ -59,18 +59,14 @@ class Student{
 	
 	void printData() {
 		JOptionPane.showMessageDialog(null,
-				"* 학생 정보 출력 *\n이름 : " + this.name + "\n국어 : " + this.kor + 
-				"\n영어 : " + this.eng + "\n수학 : " + this.math + "\n평균 : " + this.aver + "\n등급 : " + this.grade);
+				"* 학생 정보 출력 *\n이름 : " + this.name + "\n국어 점수 : " + this.kor + 
+				"\n영어 점수 : " + this.eng + "\n수학 점수 : " + this.math + "\n평균 : " + this.aver + "\n등급 : " + this.grade);
 	}
 	
 }
 public class Quiz03 {
 	public static void main(String[] args) {
-//		4명의 학생 객체를 배열로 선언하고 
-//		 *   반복문을 사용하여 학생들의 이름, 국, 영, 수를 입력 받음
-//		 *   입력이 끝나면 모든 학생의 정보를 출력
 		Student[] students = new Student[4]; 
-		String message = "";
 		
 		for(int i=0; i<students.length; i++) {
 			String name = JOptionPane.showInputDialog(null, "학생 이름을 입력하세요");
@@ -81,13 +77,13 @@ public class Quiz03 {
 			students[i] = new Student();
 			students[i].setData(name, kor, eng, math);
 			students[i].setGrade();
-			message += "학생 이름 : " + students[i].name + "\n국어 점수 : " + students[i].kor + 
-					"\n영어 점수 : " + students[i].eng + "\n수학 점수 : " + students[i].math + 
-					"\n평균 : " + students[i].aver + "\n등급 : " + students[i].grade + "\n---------\n";
+			
 		} // 배열 길이동안 입력받은 학생 정보를 토대로 Student 객체 생성 후 배열에 넣는다.
 		
 		JOptionPane.showMessageDialog(null, "학생 정보 입력 완료!");
-		JOptionPane.showMessageDialog(null, "*학생 정보 출력*\n" + message);
+		for(Student s:students) {
+			s.printData();
+		}
 	}
 }
 ```
