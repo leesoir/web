@@ -2,6 +2,10 @@
 클래스 : Student
 
 필드 : 이름, 국, 영, 수, 평균, 등급
+0) 생성자 : 
+Student(String name) : name 만 저장 
+Student(int k, int e, int m) : name 은 "없음", 국영수는 k, e, m 값을 저장. 평균, 등급도 계산되어 저장
+Student(String name, int k, int e, int m) : 이름,국영수는 name, k, e, m 값을 저장. 평균, 등급도 계산되어 저장
   메소드 : 
 1) setData() : 이름, 국, 영, 수를 인자값으로 받아, 해당 필드에 모두 저장
 2) setMean() : 객체가 가지고 있는 국, 영, 수를 가지고 평균을 계산하여 평균 필드에 저장
@@ -33,11 +37,15 @@ class Student{
 	
 	//constructor
 	Student(String name){
-		this.name = name;
+		this(name, 0, 0, 0);
 	}
-	
+
 	Student(int k, int e, int m){
-		this.setData("없음", k, e, m);
+		this("없음", k, e, m);
+	}
+
+	Student(String name, int k, int e, int m){
+		this.setData(name, k, e, m);
 		this.setGrade();
 	}
 	
@@ -50,6 +58,7 @@ class Student{
 	}
 	
 	void setGrade() {
+		// soir: if문 사용
 		if(this.aver >= 90) {
 			this.grade = 'A';
 		}
@@ -65,6 +74,29 @@ class Student{
 		else if(this.aver < 60) {
 			this.grade = 'F';
 		} 
+		
+		// teacher : switch문 사용하기 -> 더 속도가 빨라짐.
+		switch(aver/10) {
+		case 10:
+		case 9:{
+			this.grade = 'A';
+			return;
+		}
+		case 8:{
+			this.grade = 'B';
+			return;
+		}
+		case 7:{
+			this.grade = 'C';
+			return;
+		}
+		case 6:{
+			this.grade = 'D';
+			return;
+		}
+		}
+		// check : case에 해당될 경우 break/return 중 무엇이 좋을까?
+		// --> return. return은 바로 함수를 종료시킨다. switch문을 끝내고 실행할 코드가 더 없다면 break보다 return
 	}
 	
 	void printData() {
