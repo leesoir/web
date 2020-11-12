@@ -90,6 +90,7 @@ public class Quiz01 {
         //Tourist.destination;
         //break;
 				// Think : static block을 이용해서 위의 case문에는 Tourist.destination만 작성하고 싶었는데 이러면 오류난다. 
+				// teacher: 메소드를 호출하지 않고, 그냥 변수 자체만 나열하기 때문에 의미가 없다(참조가 안 되는것 같다). 이러한 문장은 bad code다.
 			}
 
 			case 2:{
