@@ -56,15 +56,11 @@ public class Tourist {
 	
 	
 	//methods
-	public String printInfo() {
-		String message = "";
-		message += "이름 : " + this.getName() + "\n예산 : " + 
+	// 해결 : printInfo 대신 toString 쓰기
+	@Override
+	public String toString() {
+		return "이름 : " + this.getName() + "\n예산 : " + 
 				this.getBudget() + "\n";
-
-		//		JOptionPane.showMessageDialog(null, message); 
-		// JOptionPane과의 결합도가 높다. toString() 활용하기
-		// check: 결합도는 낮췄는데 toString을 어떻게 활용해야 할지 모르겠다
-		return message;
 	}
 	
 }
@@ -118,7 +114,8 @@ public class Quiz01 {
 					if(null == t) {
 						break;
 					}
-					message += t.printInfo();
+					message += t; 
+					// toString()을 override 했으므로 굳이 메소드를 호출하지 않아도 된다(객체를 문자열 대입 시 자동으로 toString이 비가시화 실행됨).
 				}
 				JOptionPane.showMessageDialog(null, message);
 				break;
@@ -176,3 +173,5 @@ NullPointerException 처리에 주의하자.
 이 예외처리를 안해줘서 실행하면 자꾸 오류가 났다. 
 tourists는 이미 길이가 정해진 배열이기 때문에, 3, 4, 5의 for문에서 객체가 할당되지 않은 인덱스 값을 참조하면(즉 null값 참조) nullPointerException이 발생하게 된다. 
 저번에도 했던 실수인데 이번에도 체크 못 했다. 다음에 하면 꼭 신경쓰기.
++)toString을 오버라이딩해서 사용하면 다른 메소드를 오버라이딩 하는 것과 다르게 메소드를 호출하지 않고도 호출한 것 같이 동작하는 것이 가능하다. 
+toString의 오버라이딩을 안써 버릇했더니 잘 몰랐다 다음부터 잘 써보기!!!
