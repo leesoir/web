@@ -18,26 +18,26 @@ import javax.swing.JOptionPane;
 public class Tourist {
 	private String name; // 여행객 이름
 	private int budget; // 여행객의 예산
-	public static String destination; // 목적지
+	private static String destination; // 목적지
 	
 //	static {
 //		destination = JOptionPane.showInputDialog("목적지를 입력하세요.");
 //	} // static block을 만들어 initializing할 경우 
 	
 	// constructors
-	Tourist(String name, int budget, String destination){
-		setName(name);
-		setBudget(budget);
-		Tourist.destination = destination;
-	}
+	// check : 공유변수를 파라미터로 받는 생성자는 특수한 경우에만 사용한다.
+	// 따라서 Tourist(String name, int budget, String destination) 과 같은 생성자는 없는 것이 좋음.
 	
 	Tourist(String name, int budget){
-		this(name, budget, Tourist.destination);
+		this.setName(name);
+		this.setBudget(budget);
+	}
+
+	Tourist(String name){
+		this(name, 0);
 	}
 	
-	Tourist(String name){
-		this(name, 0, Tourist.destination);
-	}
+	Tourist(){}
 	
 	
 	// getters and setters
@@ -52,6 +52,13 @@ public class Tourist {
 	}
 	public void setBudget(int budget) {
 		this.budget = budget;
+	}
+	public static String getDestination() {
+		return destination;
+	}
+
+	public static void setDestination(String destination) {
+		Tourist.destination = destination;
 	}
 	
 	
@@ -81,11 +88,12 @@ public class Quiz01 {
 		while(flag) {
 			int input = Integer.parseInt(JOptionPane.showInputDialog
 					("1. 목적지 설정\n2. 여행객 추가\n3. 모든 여행객 정보 보기\n4. 전체 예산 보기\n5. VIP 조회\n0. 종료"));
+					// check : Integer.parseInt를 통해 이 값을 switch문에 사용할 경우, 숫자가 아닌 문자열을 입력하면 에러가 발생한다.
 
 			switch(input) {
 			case 1:{
 				String destination = JOptionPane.showInputDialog("*목적지 설정*\n목적지를 입력하세요.");
-				Tourist.destination = destination;
+				Tourist.setDestination(destination);
 				break;
         
         //Tourist.destination;
@@ -109,7 +117,7 @@ public class Quiz01 {
 			}
 
 			case 3:{
-				String message = "*모든 여행객 정보 보기*\n목적지 : " + Tourist.destination + "\n";
+				String message = "*모든 여행객 정보 보기*\n목적지 : " + Tourist.getDestination() + "\n";
 				for(Tourist t:tourists) {
 					if(null == t) {
 						break;
