@@ -56,10 +56,15 @@ public class Tourist {
 	
 	
 	//methods
-	public void printInfo() {
-		String message = "*정보 출력*\n이름 : " + this.getName() + 
-				"\n예산 : " + this.getBudget() + "\n목적지 : " + Tourist.destination;
-		JOptionPane.showMessageDialog(null, message);
+	public String printInfo() {
+		String message = "";
+		message += "이름 : " + this.getName() + "\n예산 : " + 
+				this.getBudget() + "\n";
+
+		//		JOptionPane.showMessageDialog(null, message); 
+		// JOptionPane과의 결합도가 높다. toString() 활용하기
+		// check: 결합도는 낮췄는데 toString을 어떻게 활용해야 할지 모르겠다
+		return message;
 	}
 	
 }
@@ -110,8 +115,10 @@ public class Quiz01 {
 			case 3:{
 				String message = "*모든 여행객 정보 보기*\n목적지 : " + Tourist.destination + "\n";
 				for(Tourist t:tourists) {
-					if(null == t) break; // tourists는 Tourist[5]이므로 nullPointerException 처리해줘야 한다!!!!! 
-					message += "이름 : " + t.getName() + "\n예산 : " + t.getBudget() + "\n";
+					if(null == t) {
+						break;
+					}
+					message += t.printInfo();
 				}
 				JOptionPane.showMessageDialog(null, message);
 				break;
