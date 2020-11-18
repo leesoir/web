@@ -100,5 +100,8 @@ public class Quiz01 {
 	// heejin : light copy(객체 레퍼런스 참조). 
 	// daughter.mother = mom; // mom 객체의 래퍼런스 값이 dauther.mother에 들어간다. 두 객체는 같은 레퍼런스를 참조한다.
 	// 그러나 이 경우 daughter.mother.age = 를 통해 정보를 본인이 아닌 객체가 함부로 바꿀 수 있다.
+	
+	// +) 아니면 해당 dauhter.mother.age/name값을 복사(deep copy)해와서 새로운 객체를 만들어 mother/father값에 할당해줘야 하나 ? 
+	// 어느 쪽이 더 나은 방법인지 모르겠다. 
 }
 ```
