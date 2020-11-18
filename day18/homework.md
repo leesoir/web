@@ -105,3 +105,21 @@ public class Quiz01 {
 	// 어느 쪽이 더 나은 방법인지 모르겠다. 
 }
 ```
+
+
+# thinking : deep copy와 light copy를 통한 푸린 객체의 생성
+```java
+// 1. light copy
+Person daughter = new Person("홍푸린", 5); 
+daughter.setParents(mom, dad); 
+// setParents 메소드를 통해 푸린의 mother, father 필드를 지정한다. 이 때 mother/father에는 mom, dad 객체의 래퍼런스가 들어가며 두 객체는 같은 주소를 참조한다.
+// 이 경우 푸린.mother의 값이 변경되면 mom의 정보도 변경되므로, 딸이 엄마아빠의 정보를 함부로 바꿀 수 있다.
+
+// 2. deep copy
+Person daughter = new Person("홍푸린", 5);
+daughter.setMother(new Person(mom.getName(), mom.getAge()));
+daughter.setFather(new Person(dad.getName(), dad.getAge()));
+// 이렇게 되면 깊은 복사를 통해 mom, dad의 이름과 age 값만 가져와 새로운 Person 객체를 생성하여 mother, father 필드에 할당하게 된다. 
+// 깊은 복사를 통해 필드 값을 할당하면 본래 객체의 정보를 변경할 수 없다. daughter.mother와 mom 객체는 전혀 다른 객체이다.
+```
+어떤 것이 더 좋은 방법일까?
