@@ -1,5 +1,5 @@
 # Explain
-
+```java
 /*
  * 부모 클래스 : Student 
  *  1) 필드 : 학생이름, 나이, 학교명
@@ -43,15 +43,18 @@
  *    	  학교명, 국어점수, 영어점수, 수학점수 입력 받음
  *  - 결과 출력
  */
- 
-```java
+ ```
+ # SourceCode
+ ```java
 package com.javalec.quiz;
 
 class Student{
+	// student : 이름, 나이, 학교
 	private String name;
 	private int age;
 	private String school;
-
+	
+	// constructors
 	Student(){
 		this("", 0, "");
 	}
@@ -61,7 +64,8 @@ class Student{
 		this.age = age;
 		this.school = school;
 	}
-
+	
+	// getters and setters
 	public String getName() {
 		return name;
 	}
@@ -85,14 +89,21 @@ class Student{
 	public void setSchool(String school) {
 		this.school = school;
 	}
-
+	
+	
+	// toString override
+	@Override
+	public String toString() {
+		return "이름 : " + this.name + "\n나이 : " + this.age + "\n학교 : " + this.school;
+	}
 
 }
 
 class ElementaryStudent extends Student{
+	// 초등학생 : 이름, 나이, 학교, 국어, 영어, 부모님 연락처
 	private int kor;
 	private int eng;
-	private int parents;
+	private String parents;
 
 	//constructors
 	public ElementaryStudent(String name, int age, String school, int kor, int eng){
@@ -127,29 +138,177 @@ class ElementaryStudent extends Student{
 		this.eng = eng;
 	}
 
-	public int getParents() {
+	public String getParents() {
 		return parents;
 	}
 
 	public void setParents(int parents) {
 		this.parents = parents;
 	}
-
+	
+	
+	// toString override
+	@Override
+	public String toString() {
+		return super.toString() + "\n국어점수 : " + this.getKor()
+		+ "\n영어점수 : " + this.getEng() + "\n부모님 연락처 : " + this.getParents();
+	}
 
 }
 
 
 class MiddleSchoolStudent extends Student{
+	// 중학생 : 이름, 나이, 학교, 국어, 영어, 수학, 평균
+	private int kor;
+	private int eng;
+	private int math;
+	private int aver;
+
 	
+	// constructors
+	public MiddleSchoolStudent(String name, int age, String school, int kor, int eng, int math) {
+		super(name, age, school);
+		setKor(kor);
+		setEng(eng);
+		setMath(math);
+		setAver((getKor() + getEng() + getMath())/3);
+	}
+	
+	
+	// getters and setters
+	public int getKor() {
+		return kor;
+	}
+
+	public void setKor(int kor) {
+		this.kor = kor;
+	}
+
+	public int getEng() {
+		return eng;
+	}
+
+	public void setEng(int eng) {
+		this.eng = eng;
+	}
+
+	public int getMath() {
+		return math;
+	}
+
+	public void setMath(int math) {
+		this.math = math;
+	}
+
+	public int getAver() {
+		return aver;
+	}
+
+	public void setAver(int aver) {
+		this.aver = aver;
+	}
+
+
+	// toString() override
+	@Override
+	public String toString() {
+		return super.toString() + "\n국어점수 : " + this.getKor() 
+		+ "\n영어점수 : " + this.getEng() + "\n수학점수 : " + 
+		this.getMath() + "\n평균 : " + this.getAver();
+	}
 }
 
 class HighSchoolStudent extends MiddleSchoolStudent{
+	// 고등학생 : 이름, 나이, 학교, 국어, 영어, 수학, 평균, 내신
+	private char gpa;
 	
+	// constructors
+	public HighSchoolStudent(String name, int age, String school, int kor, int eng, int math) {
+		super(name, age, school, kor, eng, math);
+		this.setGpa();
+	}
+	
+	// getters and setters
+	public char getGpa() {
+		return gpa;
+	}
+
+	public void setGpa() {
+		if(this.getAver() >= 90 && this.getAver() <= 100) {
+			this.gpa = 'A';
+		} else if(this.getAver() < 90 && this.getAver() >= 80) {
+			this.gpa = 'B';
+		} else if(this.getAver() < 80 && this.getAver() >= 70) {
+			this.gpa = 'C';
+		} else if(this.getAver() < 70 && this.getAver() >= 60) {
+			this.gpa = 'D';
+		} else this.gpa = 'F';
+	}
+	
+	// toString override
+	@Override
+	public String toString() {
+		return super.toString() + "\n내신등급 : " + this.getGpa();
+	}
+
 }
 
 public class Quiz02 {
 	public static void main(String[] args) {
+		String inputName = JOptionPane.showInputDialog("이름을 입력하세요");
+		int inputAge = Integer.parseInt(JOptionPane.showInputDialog("나이를 입력하세요"));
 
+		if(inputAge < 14) {
+			ElementaryStudent es = new ElementaryStudent(inputName, inputAge, null);
+			// 초등학생 : 이름, 나이, 학교, 국어, 영어, 부모연락처
+			String school = JOptionPane.showInputDialog("학교명을 입력하세요");
+			int kor = Integer.parseInt(JOptionPane.showInputDialog("국어 점수를 입력하세요"));
+			int eng = Integer.parseInt(JOptionPane.showInputDialog("영어 점수를 입력하세요"));
+			String parents = JOptionPane.showInputDialog("부모님 연락처를 입력하세요");
+
+			es.setSchool(school+"초등학교");
+			es.setKor(kor);
+			es.setEng(eng);
+			es.setParents(parents);
+
+			JOptionPane.showMessageDialog(null, es);
+		}
+
+		if(inputAge >= 14 && inputAge < 17) {
+			// 중학생 : 이름, 나이, 학교, 국어, 영어, 수학, 평균
+			MiddleSchoolStudent ms;
+
+			String school = JOptionPane.showInputDialog("학교명을 입력하세요");
+			int kor = Integer.parseInt(JOptionPane.showInputDialog("국어 점수를 입력하세요"));
+			int eng = Integer.parseInt(JOptionPane.showInputDialog("영어 점수를 입력하세요"));
+			int math = Integer.parseInt(JOptionPane.showInputDialog("수학 점수를 입력하세요"));
+
+			ms = new MiddleSchoolStudent(inputName, inputAge, school+"중학교", kor, eng, math);
+			JOptionPane.showMessageDialog(null, ms);
+		}
+
+		if(inputAge >=17 && inputAge < 20) {
+			// 고등학생 : 이름, 나이, 학교, 국어, 영어, 수학, 평균, 내신
+			HighSchoolStudent hs;
+
+			String school = JOptionPane.showInputDialog("학교명을 입력하세요");
+			int kor = Integer.parseInt(JOptionPane.showInputDialog("국어 점수를 입력하세요"));
+			int eng = Integer.parseInt(JOptionPane.showInputDialog("영어 점수를 입력하세요"));
+			int math = Integer.parseInt(JOptionPane.showInputDialog("수학 점수를 입력하세요"));
+
+			hs = new HighSchoolStudent(inputName, inputAge, school+"고등학교", kor, eng, math);
+			JOptionPane.showMessageDialog(null, hs);
+
+			// check : 내신등급이 숫자로 나옴 -> 해결
+		}
+
+		if(inputAge < 8) {
+			JOptionPane.showMessageDialog(null, "학생이 아닙니다!");
+		}
+
+		if(inputAge >= 20) {
+			JOptionPane.showMessageDialog(null, "대학생입니다(관리 영역을 벗어났습니다.)");
+		}
 	}
 }
 ```
