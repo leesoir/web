@@ -1,3 +1,26 @@
+# Explain
+< 국가 관리 프로그램 >
+0. Nation 클래스 
+필드 : 국가명(nation) 수도명(capital) 인구수(population) ==> 모두 private 
+메서드 : 
+Nation() 
+Nation(국가, 수도)
+Nation(국가, 수도, 인구수)
+getter, setter 
+toString() 오버라이드 
+
+​
+1. ArrayList 객체 생성 (Nation 객체들을 저장할 창고 객체) 
+​
+
+2. 메뉴 띄우기
+1) 국가 추가 ==> 국가명, 수도명, 인구수 입력 받아 Nation 객체 생성 후 ArrayList에 add()
+2) 모든 국가 보기 ==> 현재 등록된 국가들을 모두 출력 (for문과 Nation.toString() 활용)
+3) 국가 검색 ==> 국가명을 입력 받고, 해당 국가가 있으면 수도, 인구수 출력
+없으면 "미등록 국가"
+인구수는 ',' 추가 ( 예) 100,000,000 명 ) 
+0) 종료 
+
 # SourceCode
 ```java
 package day21.homework;
@@ -88,17 +111,23 @@ public class Quiz01 {
 			}
 
 			case "3":{ // 국가 검색
+				if(arr.isEmpty()) { // NullPointerException 
+					JOptionPane.showMessageDialog(null, "데이터가 존재하지 않습니다.");
+					break;
+				}
+				
 				String inputNation = JOptionPane.showInputDialog("*국가명 찾기* \n국가명을 입력하세요");
 				
+				boolean isthere = false;
 				for(Nation n:arr) {
 					if(n.getNation().equals(inputNation)) {
 						JOptionPane.showMessageDialog(null, inputNation + "\n수도명 : " + n.getCapital() + "\n인구수 : " + n.getPopulation());
+						isthere = true;
 						break;
 					}
-					
-//					if( == arr.size()-1) {
-//						JOptionPane.showMessageDialog(null, "찾는 국가명이 존재하지 않습니다.");
-//					}
+				}
+				if(isthere == false) {
+					JOptionPane.showMessageDialog(null, "찾는 국가명이 존재하지 않습니다.");
 				}
 				break;
 			}
