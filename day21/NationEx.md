@@ -34,6 +34,7 @@ class Nation{
 	private String nation;
 	private String capital;
 	private int population;
+	private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,###");
 
 
 	// construcotrs
@@ -68,16 +69,9 @@ class Nation{
 	//methods
 	@Override
 	public String toString() {
-		return "국가명 : " + this.getNation() + "\n수도명 : " + this.getCapital() + "\n인구수 : " + this.getPopulation() + "\n";
+		return "국가명 : " + this.getNation() + "\n수도명 : " + this.getCapital() + 
+				"\n인구수 : " + DECIMAL_FORMAT.format(getPopulation()) + "\n";
 	}
-	
-	public void makePeople(String nation, String capital, int population) {
-		this.setNation(nation);
-		this.setCapital(capital);
-		this.setPopulation(population);
-	}
-
-
 }
 
 public class Quiz01 {
@@ -95,8 +89,7 @@ public class Quiz01 {
 				int population = Integer.parseInt(JOptionPane.showInputDialog("인구수를 입력하세요"));
 
 				Nation people = new Nation();
-				people.makePeople(nation, capital, population);
-
+				Nation people = new Nation(nation, capital, population);
 				arr.add(people);
 				break;
 			}
