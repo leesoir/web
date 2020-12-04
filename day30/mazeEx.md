@@ -1,5 +1,5 @@
 # Explain
-
+![Day30_1 숙제](https://user-images.githubusercontent.com/69781566/101131284-61b92180-3648-11eb-873f-5f328fea75c3.png)
 ## plus
 GUI 컴포넌트 스타일링 참고  :https://www.crocus.co.kr/548
 
