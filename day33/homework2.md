@@ -1,5 +1,5 @@
 ## MEMBER table 만들기
-조건
+### 조건
 * 항목 : 회원번호(no), 아이디(id), 패스워드(password), 이메일(email), 등급(type), 적립금(point)
 * 제약조건 : 
 
@@ -9,7 +9,9 @@
 		아이디는 누락되면 안된다. (NOT NULL)
 		등급은 1 ~ 4가 있고 기본값은 1이다.
 		적립금은 1000원이 기본값이고 음수일 수 없다.
+		
 
+### SourceCode 
 ```mysql
 MariaDB [testdb]> CREATE TABLE MEMBER(
     -> no INT(3) PRIMARY KEY AUTO_INCREMENT,
@@ -37,7 +39,7 @@ MariaDB [testdb]> DESC MEMBER;
 
 
 ## QNA table 만들기
-조건
+### 조건
 
 * 항목 : 질문번호(no), 글쓴이번호(writer_no), 질문 내용(content), 등록일자(regdate)
 
@@ -48,6 +50,8 @@ MariaDB [testdb]> DESC MEMBER;
 		글쓴이 회원이 삭제되면 해당 질문도 삭제된다. (CASCADE)	
 		질문 내용은 누락되면 안된다.
 		등록일자는 기본값이 현재 시간이다. 
+
+### SourceCode 
 ```mysql
 MariaDB [testdb]> CREATE TABLE QNA(
     -> no INT(3) PRIMARY KEY AUTO_INCREMENT,
