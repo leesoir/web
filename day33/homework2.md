@@ -18,8 +18,10 @@ MariaDB [testdb]> CREATE TABLE MEMBER(
     -> id VARCHAR(40) NOT NULL UNIQUE,
     -> password VARCHAR(40) NOT NULL,
     -> email VARCHAR(40) NOT NULL UNIQUE,
-    -> type INT(1) DEFAULT 1,
+    -> type INT(1) DEFAULT 1 CHECK(type>=1 && type<=4),
     -> point INT(6) UNSIGNED DEFAULT 1000
+    -- 또는 CHECK(point >=0)를 통해 검사 가능
+    -- 보통 제약조건들은 순서가 없으나, DEFAULT문은 CHECK문의 앞에 존재해야 한다.
     -> );
 Query OK, 0 rows affected (0.056 sec)
 
