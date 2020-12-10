@@ -58,7 +58,8 @@ MariaDB [testdb]> DESC MEMBER;
 MariaDB [testdb]> CREATE TABLE QNA(
     -> no INT(3) PRIMARY KEY AUTO_INCREMENT,
     -> writer_no INT(3),
-    -> content VARCHAR(1000) NOT NULL,
+    -> content TEXT NOT NULL,
+    -- 글이 길어질 수 있으므로 VARCHAR보다는 TEXT 타입을 사용하는 것이 좋다. 
     -> regdate DATETIME DEFAULT CURRENT_TIMESTAMP,
     -> FOREIGN KEY(writer_no)
     -> REFERENCES MEMBER(no) ON UPDATE CASCADE
@@ -74,4 +75,12 @@ MariaDB [testdb]> DESC QNA;
 | content   | varchar(1000) | NO   |     | NULL                |                |
 | regdate   | datetime      | YES  |     | current_timestamp() |                |
 +-----------+---------------+------+-----+---------------------+----------------+
+```
+
+### 외래 키(FOREIGN KEY)
+QNA 테이블의 writer_no 필드는 MEMBER 테이블의 no 필드를 참조한다. 이 경우 두 필드의 데이터 타입은 같아야 하며, writer_no는 QNA 테이블의 외래 키(foreign key)라고 한다. 
+CASCADE 키워드를 사용할 경우 외래 키가 참조하는 테이블의 필드값이 변경될 경우 해당 필드값을 참조하는 다른 테이블들의 레코드들도 수정 및 삭제된다. 
+```mysql
+FOREIGN KEY(writer_no) REFERENCES MEMBER(no) UPDATE CASCADE; -- 필드값이 변경되면 함께 수정된다.
+FOREIGN KEY(writer_no) REFERENCES MEMBER(no) DELETE CASCADE; -- 필드값이 삭제되면 함께 삭제된다.
 ```
