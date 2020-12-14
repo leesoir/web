@@ -6,6 +6,10 @@
 * 존재하지 않는 포켓몬의 이름을 입력할 경우 catch문으로 넘어가지 않는다. 
 '미등록 포켓몬' 이 출력되게 하려면 어떻게 해야 할까?
 
+### now(2020.12.14 13:00)
+* 해결 완료
+* catch문으로 가지 않고 try문 내부에서 처리되도록 짜야 한다.
+
 ```java
 package day35.homework;
 
@@ -30,7 +34,7 @@ public class Quiz02 {
 	private ResultSet resultSet;
 	
 	public Quiz02(){
-		StringBuffer sb = new StringBuffer();
+		StringBuffer sb;
 		
 		try {
 			connection = DriverManager.getConnection(URL, ID, PASSWORD);
@@ -46,17 +50,35 @@ public class Quiz02 {
 			
 			try {
 				preparedStatement = connection.prepareStatement("SELECT * FROM pokemon WHERE name='" + input + "'");
-				
+				sb = new StringBuffer();
 				resultSet = preparedStatement.executeQuery();
-				while(resultSet.next()) {
-					sb.append("no." + resultSet.getInt(1) + " " + input + "(lv." + resultSet.getInt(3) + 
-				") hp " + resultSet.getInt(4) + "/ap " + resultSet.getInt(5) + " 생성일자 " + resultSet.getString(6));
+				
+				if(resultSet.next()) {
+				// pokemon의 name 필드는 unique 제약조건이 설정되어있으므로, 굳이 while문을 사용할 필요는 없음
+					sb.append("no. ");
+					sb.append(resultSet.getInt(1));
+					sb.append(" ");
+					sb.append(input);
+					sb.append("(lv.");
+					sb.append(resultSet.getInt(3));
+					sb.append(") hp");
+					sb.append(resultSet.getInt(4));
+					sb.append("/ap ");
+					sb.append(resultSet.getInt(5));
+					sb.append(" 생성일자 ");
+					sb.append(resultSet.getString(6));
+					// +연산자를 사용하여 처리할 경우 +가 사용될 때마다 새로운 객체가 생성되었다가 gc에 의해 폐기된다. 
+					// vm능력 향상을 위해 위처럼 append를 이용해 concat하는 것이 좋음.
+				} else {
+					JOptionPane.showMessageDialog(null, "미등록 포켓몬");
+					continue;
 				}
 				
 				JOptionPane.showMessageDialog(null, "*조회 성공*\n" + sb);
 			}catch(SQLException e) {
-				JOptionPane.showMessageDialog(null, "미등록 포켓몬");
+				e.printStactTrace();
 				// 해결해야 할 문제 : 미등록 포켓몬을 입력할 경우 어떻게 해당 문장이 나타나게 해야 할까?
+				// -> 해결 완료
 			}
 		}
 	}
