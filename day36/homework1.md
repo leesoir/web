@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+@SuppressWarnings("serial")
 public class test01 extends JFrame{
 	private static final String URL = 
 			"jdbc:mysql://127.0.0.1/testdb?useUnicode=true&characterEncoding=utf8";
@@ -33,7 +34,7 @@ public class test01 extends JFrame{
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void close() {
 		// preparedStatement, connection을 닫아 주는 것을 한 번에 수행(함수화)
 		try {
@@ -56,7 +57,7 @@ public class test01 extends JFrame{
 		preparedStatement.setInt(3, ap);
 		preparedStatement.setInt(4, hp);
 		// INJECTION 판단 쿼리(주석이 포함되어 있는지 등)
-		
+
 		preparedStatement.execute();
 	}
 
@@ -64,20 +65,33 @@ public class test01 extends JFrame{
 		// 포켓몬 추가
 		String name="";
 		int level=0;
-		
-		while(true) {
-			name = JOptionPane.showInputDialog("이름을 입력하세요.");
-			if(name.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "공백은 이름으로 지정 불가합니다.");
-				continue;
-			}
 
-			level = Integer.parseInt(JOptionPane.showInputDialog("레벨을 입력하세요."));
-			if(level < 0) {
-				JOptionPane.showMessageDialog(null, "음수값은 레벨이 될 수 없습니다.");
+		while(true) {
+			try {
+				name = JOptionPane.showInputDialog("이름을 입력하세요.").trim();
+				// tirm()을 통해 공백 제거 후 try-catch문으로 묶어준다. 
+			}catch(NullPointerException e) {
+				JOptionPane.showMessageDialog(null, "null값은 이름이 될 수 없습니다.");
 				continue;
 			}
-			
+			//			if(name.isEmpty()) {
+			//				JOptionPane.showMessageDialog(null, "공백은 이름으로 지정 불가합니다.");
+			//				continue;
+			//			}
+
+			try {
+				level = Integer.parseInt(JOptionPane.showInputDialog("레벨을 입력하세요."));
+				if(level < 0) {
+					JOptionPane.showMessageDialog(null, "음수값은 레벨이 될 수 없습니다.");
+					continue;
+				}
+			}catch(NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "레벨은 숫자만 지정 가능합니다.");
+				continue;
+			}
+			// numberformatException 처리
+
+
 			break;
 		}
 
@@ -152,9 +166,10 @@ public class test01 extends JFrame{
 	private void menu04() {
 		// 포켓몬 삭제
 		String name = JOptionPane.showInputDialog("삭제할 포켓몬의 이름을 입력하세요.");
-		String deletesql = "DELETE FROM pokemon WHERE name='" + name + "'";
+		String deletesql = "DELETE FROM pokemon WHERE name='?'";
 
 		try {
+			preparedStatement.setString(1, name);
 			preparedStatement = connection.prepareStatement(sql);
 			resultSet = preparedStatement.executeQuery();
 
@@ -177,9 +192,10 @@ public class test01 extends JFrame{
 	private void menu05() {
 		// 레벨업
 		String name = JOptionPane.showInputDialog("레벨업할 포켓몬의 이름을 입력하세요.");
-		String levelupsql = "UPDATE pokemon SET level = level+1 WHERE name='" + name + "'";
+		String levelupsql = "UPDATE pokemon SET level = level+1 WHERE name='?'";
 
 		try {
+			preparedStatement.setString(1, name);
 			preparedStatement = connection.prepareStatement(sql);
 			resultSet = preparedStatement.executeQuery();
 
@@ -257,13 +273,14 @@ public class test01 extends JFrame{
 				break;
 			}
 		}
-		
+
 		close();
 	}
-	
+
 	public static void main(String[] args) {
 		new test01();
 	}
 
 }
+
 ```
